@@ -22,6 +22,7 @@ syntax enable
 autocmd BufRead,BufNewFile *.ctp set filetype=php
 autocmd InsertLeave * set nocursorline
 autocmd InsertEnter * set cursorline
+autocmd FileType make setlocal noexpandtab
 
 nmap <C-N><C-N> :set invnumber<CR>
 nmap <C-X><C-W> :set invwrap<CR>
