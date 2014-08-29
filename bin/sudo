@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python -m keyring.cli get sudo $USER | sudo -S

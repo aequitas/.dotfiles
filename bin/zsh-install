@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+setopt EXTENDED_GLOB
+cd "${ZDOTDIR:-$HOME}"
+for rcfile in .zprezto/runcoms/^README.md(.N); do
+      ln -fs "$rcfile" ".${rcfile:t}"
+done

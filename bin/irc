@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mosh ijohan.nl .bin/irc

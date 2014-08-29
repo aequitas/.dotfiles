@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sed -i '' 's/SendEnv LANG LC_\*/# &/' /etc/ssh_config

@@ -1,0 +1,123 @@
+#!/bin/bash
+
+# automatically change configuration of Mac OS X based on location
+# author: Onne Gorter <o.gorter@gmail.com>
+# url: http://tech.inhelsinki.nl/locationchanger/
+# version: 0.4
+
+# redirect all IO to /dev/null (comment this out if you want to debug)
+#exec 1>/dev/null 2>/dev/null
+
+# get a little breather before we get data for things to settle down
+exit 0
+sleep 4
+
+EN1IP=`ifconfig en1 | grep 'inet ' | cut -d' ' -f 2`
+if [ ! -z $EN1IP ];then
+    echo en1 is here
+    exit 0
+fi
+
+echo en1 not here
+
+kextstat |grep com.apple.driver.AppleUSBEthernet
+if [ $? == 0 ];then
+    kextunload -b com.apple.driver.AppleUSBEthernet 
+fi
+
+sleep 2
+kextload -b com.apple.driver.AppleUSBEthernet
+
+exit 0
+
+
+# get various system information
+SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I\
+ | grep ' SSID:' | cut -d ':' -f 2 | tr -d ' '`
+EN0IP=`ifconfig en0 | grep 'inet ' | cut -d' ' -f 2`
+EN1IP=`ifconfig en1 | grep 'inet ' | cut -d' ' -f 2`
+
+LOCATION=
+
+# locations (use to be used Location name here)
+ATHOME=Home
+ATWORK=Work
+
+# detect HOME
+ATHOME_SSID=homessid
+ATHOME_EN0IP=192.168.255.
+ATHOME_EN1IP=192.168.255.
+
+# detect Work
+ATWORK_SSID=workssid
+ATWORK_EN0IP=255.
+ATWORK_EN1IP=255.
+
+
+if [ -z $LOCATION ]; then
+    case $SSID in
+        $ATHOME_SSID    ) LOCATION="$ATHOME";;
+        $ATWORK_SSID    ) LOCATION="$ATWORK";;
+    esac
+        REASON=SSID
+fi
+
+if [ -z $LOCATION ]; then
+    case $EN0IP in
+        $ATHOME_EN0IP*  ) LOCATION="$ATHOME";;
+        $ATWORK_EN0IP*  ) LOCATION="$ATWORK";;
+    esac
+        REASON=EN0IP
+fi
+
+if [ -z $LOCATION ]; then
+    case $EN1IP in
+        $ATHOME_EN1IP*  ) LOCATION="$ATHOME";;
+        $ATWORK_EN1IP*  ) LOCATIOn="$ATWORK";;
+    esac
+        REASON=EN1IP
+fi
+
+if [ -z $LOCATION ]; then
+    # still didn't get a location, so do automatic
+    LOCATION="automatic"
+        REASON=Fallback
+fi
+
+case $LOCATION in
+    $ATWORK )
+        scselect $ATWORK
+        #lpoptions -d "Work Printer"
+        
+        # get some time to figure ip addresses out ...
+        sleep 3
+        if ping -c 1 linux; then
+            # if necesairy, start a proxy for synergy on host 'linux'
+            ps -x | grep -E '[0-9] ssh.*-R24800:'  || \
+                ssh -fN linux -R24800:127.0.0.1:24800 
+            # if not running, start synergys with display name macosx
+            ps -x | grep -E '[0-9] synergys'  || \
+                synergys -n macosx
+        fi
+    ;;
+    
+    $ATHOME )
+        # do some stuff here if you want to
+        scselect $ATHOME
+        #lpoptions -d "Home Printer"
+    ;;
+
+    automatic )
+        # do some stuff here if you want to
+        scselect Automatic
+        #lpoptions -d "Default Printer"
+    ;;
+    
+esac
+
+# do some stuff here that needs to happen after every network change
+
+echo `date` "Location: $LOCATION - $REASON" >> $HOME/.locationchanger.log
+
+exit 0
+

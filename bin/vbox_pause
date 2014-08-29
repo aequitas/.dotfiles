@@ -1,0 +1,3 @@
+#!/bin/bash
+
+VBoxManage list vms|sed -E 's/"(.*)".*/\1/' | xargs -n1 -I@ VBoxManage controlvm @ pause
