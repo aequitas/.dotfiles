@@ -2,5 +2,6 @@
 
 ln -sf $HOME/.dotfiles/rcrc $HOME/.rcrc
 
-cd $HOME/.dotfiles/prezto
-git pull
+cd $HOME/.dotfiles/
+git submodule init prezto 
+git submodule update prezto 
