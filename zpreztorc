@@ -1,0 +1,20 @@
+zstyle ':prezto:*:*' color 'yes'
+zstyle ':prezto:module:prompt' theme 'nicoulaj'
+
+zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'completion' \
+  'prompt' \
+  'git' \
+  'syntax-highlighting' \
+  'osx' \
+  'homebrew' \
+  'python'
+		
+zstyle ':prezto:module:editor' key-bindings 'emacs'

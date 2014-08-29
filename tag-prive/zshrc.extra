@@ -1,0 +1,7 @@
+alias brew="sudo -u johanbloemberg -i brew"
+
+export DOCKER_HOST=tcp://thaddis:2375
+export FLEETCTL_ENDPOINT=http://thaddis:4001
+export ETCDCTL_PEERS=http://thaddis:4001
+
+alias vulcanctl="docker run mailgun/vulcand /opt/vulcan/vulcanctl --vulcan 'http://thaddis:8182'"
