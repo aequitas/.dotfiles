@@ -18,10 +18,10 @@ zstyle ":completion:*:commands" rehash 1
 zstyle ':vcs_info:*' enable git
 
 # general aliasses
-alias ll="ls -la"
 alias brew="sudo -u johanbloemberg -i brew"
 alias vi=vim
 alias less="less -n"
+unalias rm
 
 # osx hacks
 if [[ `uname` == 'Darwin' ]];then
@@ -55,5 +55,11 @@ alias vs="vagrant ssh"
 # fix mount output for osx
 alias mount='mount | column -t'
 
+# osx ls colors
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+
 # load tagged extras
 test -f $HOME/.zshrc.extra && source $HOME/.zshrc.extra
+
+# always exit 0
+true
