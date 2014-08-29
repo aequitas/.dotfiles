@@ -1,11 +1,9 @@
-[user]
-name = johan-bloemberg
-email = johan.bloemberg@avira.com
 [core]
-excludesfile = /Users/johanbloemberg/.gitignore
+#excludesfile = /Users/johanbloemberg/.gitignore
 ignorecase = true
-[core]
 autocrlf = input
+[include]
+path = .gitconfig.user
 [branch]
 autosetupmerge = true
 autosetuprebase = always
@@ -18,7 +16,7 @@ threads = 0
 [diff]
 tool = opendiff
 [merge]
-	tool = sublime
+tool = opendiff
 [alias]
 ru = remote update
 co = checkout
@@ -49,15 +47,12 @@ rs = rebase --skip
 [push]
 default = current
 [status]
-	short = false
-	branch = true
+short = false
+branch = true
 [advice]
-  pushNonFastForward = false
-  statusHints = false
-  commitBeforeMerge = false
-  resolveConflict = false
-  implicitIdentity = false
-  detachedHead = false
-[mergetool "sublime"]
-	cmd = subl -w $MERGED
-	trustExitCode = false
+pushNonFastForward = false
+statusHints = false
+commitBeforeMerge = false
+resolveConflict = false
+implicitIdentity = false
+detachedHead = false
