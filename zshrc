@@ -21,7 +21,24 @@ zstyle ':vcs_info:*' enable git
 alias brew="sudo -u johanbloemberg -i brew"
 alias vi=vim
 alias less="less -n"
+
+# disable autocorrect
+unsetopt correct
+unalias ack
+unalias cd
+unalias cp
+unalias ebuild
+unalias gcc
+unalias gist
+unalias grep
+unalias heroku
+unalias ln
+unalias man
+unalias mkdir
+unalias mv
+unalias mysql
 unalias rm
+unalias sl
 
 # osx hacks
 if [[ `uname` == 'Darwin' ]];then
@@ -42,7 +59,7 @@ export PYTHONSTARTUP=~/.pystartup
 export WORKON_HOME=~/.envs
 test -f /usr/local/bin/virtualenvwrapper.sh && source /usr/local/bin/virtualenvwrapper.sh
 
-# vagrant 
+# vagrant
 alias v=vagrant
 alias V=vagrant
 alias vp="vagrant provision"
