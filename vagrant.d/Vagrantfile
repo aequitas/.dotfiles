@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "
   wget -q https://thoughtbot.github.io/rcm/debs/rcm_1.2.3-1_all.deb -O /tmp/rcm_1.2.3-1_all.deb
   sudo dpkg -i /tmp/rcm_1.2.3-1_all.deb
-  rcup -f
-  sudo -u vagrant rcup -f
+  rcup -f -tag vagrant
+  sudo -u vagrant rcup -f -tag vagrant
   "
 end

@@ -3,5 +3,5 @@
 ln -sf $HOME/.dotfiles/rcrc $HOME/.rcrc
 
 cd $HOME/.dotfiles/
-git submodule init prezto 
-git submodule update prezto 
+git submodule init prezto
+git submodule update prezto --recursive

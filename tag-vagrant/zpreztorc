@@ -11,12 +11,10 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'completion' \
   'git' \
-  'osx' \
-  'homebrew' \
   'python' \
   'syntax-highlighting' \
   'prompt'
 
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' check-for-changes false
