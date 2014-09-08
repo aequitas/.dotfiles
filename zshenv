@@ -17,7 +17,6 @@ export HISTFILESIZE=500000
 
 # terminal
 export TERM=xterm-256color
-export TZ=Europe/Amsterdam
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
