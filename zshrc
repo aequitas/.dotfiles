@@ -43,6 +43,8 @@ unalias sl
 # osx hacks
 if [[ `uname` == 'Darwin' ]];then
 	alias top="top -o cpu"
+else
+    alias top="top -d5 -c"
 fi
 
 # git aliasses
