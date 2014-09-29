@@ -1,34 +1,44 @@
 Vagrant.configure("2") do |config|
-  # make it zsh
-  config.vm.provision "shell", inline: "
-  DEBIAN_FRONTEND=noninteractive;apt-get -yqq install zsh git;
-  chsh -s /usr/bin/zsh vagrant; chsh -s /usr/bin/zsh root
-  "
+    config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+    config.ssh.host = "localhost"
 
-  config.ssh.host = "localhost"
+    # make it zsh
+    config.vm.provision "shell", inline: "
+    DEBIAN_FRONTEND=noninteractive apt-get -yqq install zsh git;
+    chsh -s /usr/bin/zsh vagrant; chsh -s /usr/bin/zsh root
+    "
 
-  # add dotfiles
-  rsync_args = ["--verbose", "--archive", "--delete", "-z"]
-  config.vm.synced_folder "~/.dotfiles/", "/home/vagrant/.dotfiles/", type: "rsync", rsync__args: rsync_args
-  config.vm.synced_folder "~/.dotfiles/", "/root/.dotfiles/", type: "rsync", rsync__args: rsync_args
 
-  # install and apply rcm
-  config.vm.provision "shell", inline: "
-  wget -q https://thoughtbot.github.io/rcm/debs/rcm_1.2.3-1_all.deb -O /tmp/rcm_1.2.3-1_all.deb
-  sudo dpkg -i /tmp/rcm_1.2.3-1_all.deb
-  rcup -f -tag vagrant
-  sudo -u vagrant rcup -f -tag vagrant
-  "
+    # add dotfiles
+    rsync_args = ["--verbose", "--recursive", "--delete", "-z"]
+    config.vm.synced_folder "~/.dotfiles/", "/home/vagrant/.dotfiles/", type: "rsync", rsync__args: rsync_args
+    config.vm.synced_folder "~/.dotfiles/", "/root/.dotfiles/", type: "rsync", rsync__args: rsync_args
+
+    # install and apply rcm
+    config.vm.provision "shell", inline: "
+    which rcup || (wget -q https://thoughtbot.github.io/rcm/debs/rcm_1.2.3-1_all.deb \
+    -O /tmp/rcm_1.2.3-1_all.deb && sudo dpkg -i /tmp/rcm_1.2.3-1_all.deb);
+    rcup -f -t vagrant ; sudo -i -u vagrant rcup -f -t vagrant
+    "
 end
 
 Vagrant.configure("2") do |config|
-  # more powah
-  config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
-    vb.customize ["modifyvm", :id, "--cpus", "3"]
-    vb.customize ["modifyvm", :id, "--ioapic", "on"]
-  end
+    # more powah
+    config.vm.provider :virtualbox do |vb|
+        vb.customize ["modifyvm", :id, "--memory", "2048"]
+        vb.customize ["modifyvm", :id, "--cpus", "3"]
+        vb.customize ["modifyvm", :id, "--ioapic", "on"]
+        # set proper network cards
+        vb.customize ["modifyvm", :id, "--nictype1", 'Am79C973']
+        vb.customize ["modifyvm", :id, "--nictype2", 'Am79C973']
+    end
 
-  # install custom build packages which would probably not be available in repos yet
-  config.vm.provision "shell", inline: "DEBIAN_FRONTEND=noninteractive;test -d /vagrant/bootstrap-packages && ls /vagrant/bootstrap-packages/*.deb|xargs dpkg -i || true"
+    # install custom build packages which would probably not be available in repos yet
+    config.vm.provision "shell", inline: "DEBIAN_FRONTEND=noninteractive;test -d /vagrant/bootstrap-packages && find /vagrant/bootstrap-packages/ -name '*.deb'|xargs -r dpkg -i"
+
+    # NFS shares
+    # config.vm.network "private_network", type: "dhcp"
+    # config.vm.synced_folder ".", "/vagrant", type: "nfs"
+    # config.vm.synced_folder "src", "/usr/src/ames", type: "nfs"
+
 end

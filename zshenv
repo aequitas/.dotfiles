@@ -30,3 +30,4 @@ export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:$PATH
 # add additional bin search paths
 export PATH=$PATH:/usr/local/share/npm/bin
 
+test -f ~/.zprofile.local && source ~/.zprofile.local

@@ -53,7 +53,7 @@ alias so=git
 alias much=git
 alias very=git
 alias many=git
-alias wow='git status'
+alias wow='git status -sb'
 alias omg='git ll'
 
 # python
@@ -79,6 +79,11 @@ export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 # load tagged extras
 test -f $HOME/.zshrc.extra && source $HOME/.zshrc.extra
+
+# extra completions
+fpath=(/usr/local/share/zsh/site-functions/ $fpath)
+fpath=(~/.zsh/completion/ $fpath)
+compinit -i
 
 # always exit 0
 true

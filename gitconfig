@@ -1,58 +1,61 @@
 [core]
-ignorecase = true
-autocrlf = input
-excludesfile = ~/.gitignore
+	ignorecase = true
+	autocrlf = input
+	excludesfile = ~/.gitignore
 [include]
-path = .gitconfig.user
+	path = .gitconfig.user
 [branch]
-autosetupmerge = true
-autosetuprebase = always
+	autosetupmerge = true
+	autosetuprebase = always
 [color]
-ui = true
-diff = auto
-interactive = auto
+	ui = true
+	diff = auto
+	interactive = auto
 [pack]
-threads = 0
+	threads = 0
 [diff]
-tool = opendiff
+	tool = opendiff
 [merge]
-tool = opendiff
+	tool = opendiff
 [alias]
-ru = remote update
-co = checkout
-cb = checkout -b
-ci = commit -v
-cia = commit --verbose --amend
-ciap = commit --verbose --amend --patch
-cip = commit --verbose --patch
-cp = checkout -p 
-st = status -sb
-br = branch
-ds = diff --stat
-cm = checkout master
-bD = branch -d
-llog = log --pretty=format:'%h : %s' --topo-order --graph --color=always
-df = diff --word-diff
-#ll = log --oneline --decorate -15 --all --graph --remotes
-ll = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-lll = log --oneline --decorate -50 --all --graph --remotes
-pa = pull --all
-cap = commit --patch --amend
-wdiff = diff --color-words
-cf = !sh -c \"git diff --name-only | uniq | xargs subl\"
-review = push origin HEAD:refs/for/master
-ra = rebase --abort
-rc = rebase --continue
-rs = rebase --skip
+	ru = remote update
+	co = checkout
+	cb = checkout -b
+	ci = commit -v
+	cia = commit --verbose --amend
+	ciap = commit --verbose --amend --patch
+	cip = commit --verbose --patch
+	cp = checkout -p 
+	st = status -sb
+	br = branch
+	ds = diff --stat
+	cm = checkout master
+	bD = branch -d
+	llog = log --pretty=format:'%h : %s' --topo-order --graph --color=always
+	df = diff --word-diff
+	#ll = log --oneline --decorate -15 --all --graph --remotes
+	ll = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lll = log --oneline --decorate -50 --all --graph --remotes
+	pa = pull --all
+	cap = commit --patch --amend
+	wdiff = diff --color-words
+	cf = !sh -c \"git diff --name-only | uniq | xargs subl\"
+	review = push origin HEAD:refs/for/master
+	ra = rebase --abort
+	rc = rebase --continue
+	rs = rebase --skip
+    pr = pull-request
 [push]
-default = current
+	default = current
 [status]
-short = false
-branch = true
+	short = false
+	branch = true
 [advice]
-pushNonFastForward = false
-statusHints = false
-commitBeforeMerge = false
-resolveConflict = false
-implicitIdentity = false
-detachedHead = false
+	pushNonFastForward = false
+	statusHints = false
+	commitBeforeMerge = false
+	resolveConflict = false
+	implicitIdentity = false
+	detachedHead = false
+[hub]
+    host = github.dtc.avira.com
